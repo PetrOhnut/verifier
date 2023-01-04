@@ -14,7 +14,7 @@ def dir_path(path):
     if os.path.isdir(path):
         return path
     else:
-        raise argparse.ArgumentTypeError(f"readable_dir:{path} is not a valid path")
+        raise argparse.ArgumentTypeError(f"readable_dir: {path} is not a valid path")
 
 def target_path(path):
     if os.path.isdir(path):
