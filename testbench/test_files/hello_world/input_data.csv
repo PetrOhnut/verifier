@@ -1,0 +1,2 @@
+#Timestamp[ns];rstn_i;gpio_i;uart0_rxd_i #Procesor is reade to read at cca 80000 ns, one character takes aroud 530000 ns to send with boud-rate 19200 
+0;1;;
