@@ -1,0 +1,5 @@
+.../testbench/test_files/demo_pwm/neorv32_application_image.vhd
+.../testbench/test_files/demo_pwm/input_data.csv
+.../testbench/test_files/demo_pwm/output_data.csv
+6 ms
+1
