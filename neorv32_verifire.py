@@ -35,14 +35,17 @@ def parse_arguments():
     logging.debug("Parsing input arguments")
     parser = argparse.ArgumentParser()
     group = parser.add_mutually_exclusive_group(required=True)
+    sim_group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument("-gp", "--generate_project", action='store_true',
                         help="Generate Vivado project.")
     group.add_argument("-pp", "--project_path", metavar='PATH', type=Path,
                         help="Path to Noerv32 Vivado project.")
     parser.add_argument('-vp','--vivado_path', metavar='PATH', type=dir_path, required=True,
                         help="Path to Vivado install directory.")
-    parser.add_argument('-s','--simulate', metavar='PATH', type=dir_path,
-                        help="Path to simulated firmware.")
+    sim_group.add_argument('-s','--simulate', metavar='PATH', type=dir_path,
+                        help="Path to simulated scenario.")
+    sim_group.add_argument('-sa','--simulate_all', action='store_true',
+                        help="Simulate all test scenarios.")
     parser.add_argument("-v", "--verbosity", type=int, choices=[0, 1, 2], default=1,
                         help="Increase output verbosity")
     args = parser.parse_args()
@@ -85,7 +88,7 @@ def main():
         #sim = Simulator(args.vivado_path, args.simulate)
         sim.tests = args.simulate
         sim.simulate()
-    else:
+    elif (args.simulate_all):
         #Get test files
         #test_list = get_test_list()
         #sim = Simulator(args.vivado_path, test_list, gen.project_path)
