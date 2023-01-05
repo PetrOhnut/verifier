@@ -23,9 +23,6 @@ def target_path(path):
     else:
         logging.warning("Target folder for project generation does not exest! Creating...")
 
-def copy_files(source, target):
-    shutil.copytree(source, target)
-
 def get_test_list():
     test_path = Path(os.path.dirname(os.path.realpath(__file__))).joinpath('testbench').joinpath('test_files')
     test_list = list()
@@ -72,14 +69,6 @@ def main():
     
     #Parse arguemnts
     args = parse_arguments()
-
-    #Copy essential files to Neorv32 folder
-    logging.info("Copying utils folder to Neorv32...")
-    try:
-        copy_files("./utils/setups","./neorv32/setups")
-        logging.info("Done!")
-    except:
-        logging.warning("Files already exists in Neorv32")
 
     #Create Simulator class
     sim = Simulator(args.vivado_path, None, None)
