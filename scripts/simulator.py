@@ -61,6 +61,7 @@ class Simulator(Verifier):
         return self.__script_path
 
     def simulate_all(self):
+        self.logger.debug("#### RUNNING SIMULATE ALL FUNCTION ####")
         source = self.get_script_path().joinpath('neorv32_test.tcl')
         #self.logger.info(self.tests[1])
         for test in self.tests:
@@ -71,6 +72,8 @@ class Simulator(Verifier):
                 continue
             else:
                 self.logger.info("Checked required files for " + Path(test).name + " test")
+
+            self.logger.debug("Vivado project path : " + str(Path(self.project_path).joinpath("neorv32_verify.xpr")))
         
             cmd = [ 
                 Path(self.vivado_path),
@@ -78,7 +81,7 @@ class Simulator(Verifier):
                 '-nojournal', '-nolog',
                 '-source', source,
                 '-tclargs',
-                    '--project_dir', str(self.project_path)+".xpr",
+                    '--project_dir', Path(self.project_path).joinpath("neorv32_verify.xpr"),#.joinn#"/neorv32_verify.xpr",
                     '--input_file', Path(test).joinpath(str(test_files[0])),
                     '--output_file', Path(test).joinpath(str(test_files[1])),
                     '--software_file', Path(test).joinpath(str(test_files[2]))
@@ -95,6 +98,7 @@ class Simulator(Verifier):
         return 
 
     def simulate(self):
+        self.logger.debug("#### RUNNING SIMULATE FUNCTION ####")
         source = self.get_script_path().joinpath('neorv32_test.tcl')
         #self.logger.info(self.tests[1])
         self.logger.info("Running " + Path(self.tests).name + " test for Neorv32")
@@ -104,6 +108,8 @@ class Simulator(Verifier):
             return
         else:
             self.logger.info("Checked required files for " + Path(self.tests).name + " test")
+        
+        self.logger.debug("Vivado project path : " + str(Path(self.project_path).joinpath("neorv32_verify.xpr")))
     
         cmd = [ 
             Path(self.vivado_path),
@@ -111,7 +117,7 @@ class Simulator(Verifier):
             '-nojournal', '-nolog',
             '-source', source,
             '-tclargs',
-                '--project_dir', str(self.project_path)+".xpr",
+                '--project_dir', Path(self.project_path).joinpath("neorv32_verify.xpr"),
                 '--input_file', Path(self.tests).joinpath(str(test_files[0])),
                 '--output_file', Path(self.tests).joinpath(str(test_files[1])),
                 '--software_file', Path(self.tests).joinpath(str(test_files[2]))
