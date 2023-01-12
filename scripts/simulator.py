@@ -13,7 +13,25 @@ class Simulator(Verifier):
         self.test_path = self.__script_path.parents[0].joinpath('testbench')
         self.tests = test_list
 
-    def __run_simulation():
+    def __run_simulation(self, test_files, source):
+        cmd = [ 
+            Path(self.vivado_path),
+            '-mode', 'batch',
+            '-nojournal', '-nolog',
+            '-source', source,
+            '-tclargs',
+                '--project_dir', Path(self.project_path).joinpath("neorv32_verify.xpr"),
+                '--input_file', Path(self.tests).joinpath(str(test_files[0])),
+                '--output_file', Path(self.tests).joinpath(str(test_files[1])),
+                '--software_file', Path(self.tests).joinpath(str(test_files[2]))
+            ]
+
+        if len(test_files) == 4:
+            cmd.append('--config_file')
+            cmd.append(Path(self.tests).joinpath(str(test_files[3])))
+
+        self.run_command(cmd)
+        
         return
 
     def __find_file(self, dir_path, name, ending):
@@ -75,25 +93,7 @@ class Simulator(Verifier):
 
             self.logger.debug("Vivado project path : " + str(Path(self.project_path).joinpath("neorv32_verify.xpr")))
         
-            cmd = [ 
-                Path(self.vivado_path),
-                '-mode', 'batch',
-                '-nojournal', '-nolog',
-                '-source', source,
-                '-tclargs',
-                    '--project_dir', Path(self.project_path).joinpath("neorv32_verify.xpr"),#.joinn#"/neorv32_verify.xpr",
-                    '--input_file', Path(test).joinpath(str(test_files[0])),
-                    '--output_file', Path(test).joinpath(str(test_files[1])),
-                    '--software_file', Path(test).joinpath(str(test_files[2]))
-                ]
-
-            if len(test_files) == 4:
-                cmd.append('--config_file')
-                cmd.append(Path(test).joinpath(str(test_files[3])))
-
-            self.run_command(cmd)
-
-            return
+            self.__run_simulation(test_files, source)
 
         return 
 
@@ -111,23 +111,7 @@ class Simulator(Verifier):
         
         self.logger.debug("Vivado project path : " + str(Path(self.project_path).joinpath("neorv32_verify.xpr")))
     
-        cmd = [ 
-            Path(self.vivado_path),
-            '-mode', 'batch',
-            '-nojournal', '-nolog',
-            '-source', source,
-            '-tclargs',
-                '--project_dir', Path(self.project_path).joinpath("neorv32_verify.xpr"),
-                '--input_file', Path(self.tests).joinpath(str(test_files[0])),
-                '--output_file', Path(self.tests).joinpath(str(test_files[1])),
-                '--software_file', Path(self.tests).joinpath(str(test_files[2]))
-            ]
-
-        if len(test_files) == 4:
-            cmd.append('--config_file')
-            cmd.append(Path(self.tests).joinpath(str(test_files[3])))
-
-        self.run_command(cmd)
+        self.__run_simulation(test_files, source)
 
         return
 
