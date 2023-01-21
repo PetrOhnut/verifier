@@ -35,7 +35,7 @@ def setup_logging(logfile_file):
     console_log_output = sys.stdout
     console_handler = logging.StreamHandler(console_log_output)
     console_handler.setLevel("DEBUG") # only accepts uppercase level namesse
-    console_formatter = LogFormatter(fmt="%(color_on)s[%(created)d] [%(threadName)s] [%(levelname)-8s] %(message)s%(color_off)s", color=True)
+    console_formatter = LogFormatter(fmt="%(color_on)s[%(asctime)s] [%(threadName)s] [%(levelname)-8s] %(message)s%(color_off)s", color=True)
     console_handler.setFormatter(console_formatter)
     logger.addHandler(console_handler)
 
@@ -47,7 +47,7 @@ def setup_logging(logfile_file):
         return False
     
     logfile_handler.setLevel("DEBUG") # only accepts uppercase level names
-    logfile_formatter = LogFormatter(fmt="%(color_on)s[%(created)d] [%(threadName)s] [%(levelname)-8s] %(message)s%(color_off)s", color=False)
+    logfile_formatter = LogFormatter(fmt="%(color_on)s[%(asctime)s] [%(threadName)s] [%(levelname)-8s] %(message)s%(color_off)s", color=False)
     logfile_handler.setFormatter(logfile_formatter)
     logger.addHandler(logfile_handler)
 

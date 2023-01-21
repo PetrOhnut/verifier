@@ -13,7 +13,11 @@ class Simulator(Verifier):
         self.test_path = self.__script_path.parents[0].joinpath('testbench')
         self.tests = test_list
 
-    def __run_simulation(self, test_files, source):
+    def __run_simulation(self, test, test_files, source):
+        self.logger.debug("Test: " + str(test))
+        self.logger.debug("Test files: " + str(test_files))
+        self.logger.debug("Source: " + str(source))
+        self.logger.debug("Project path: " + str(self.project_path))
         cmd = [ 
             Path(self.vivado_path),
             '-mode', 'batch',
@@ -21,14 +25,14 @@ class Simulator(Verifier):
             '-source', source,
             '-tclargs',
                 '--project_dir', Path(self.project_path).joinpath("neorv32_verify.xpr"),
-                '--input_file', Path(self.tests).joinpath(str(test_files[0])),
-                '--output_file', Path(self.tests).joinpath(str(test_files[1])),
-                '--software_file', Path(self.tests).joinpath(str(test_files[2]))
+                '--input_file', Path(test).joinpath(str(test_files[0])),
+                '--output_file', Path(test).joinpath(str(test_files[1])),
+                '--software_file', Path(test).joinpath(str(test_files[2]))
             ]
 
         if len(test_files) == 4:
             cmd.append('--config_file')
-            cmd.append(Path(self.tests).joinpath(str(test_files[3])))
+            cmd.append(Path(test).joinpath(str(test_files[3])))
 
         self.run_command(cmd)
         
@@ -93,7 +97,8 @@ class Simulator(Verifier):
 
             self.logger.debug("Vivado project path : " + str(Path(self.project_path).joinpath("neorv32_verify.xpr")))
         
-            self.__run_simulation(test_files, source)
+
+            self.__run_simulation(test, test_files, source)
 
         return 
 
@@ -111,7 +116,7 @@ class Simulator(Verifier):
         
         self.logger.debug("Vivado project path : " + str(Path(self.project_path).joinpath("neorv32_verify.xpr")))
     
-        self.__run_simulation(test_files, source)
+        self.__run_simulation(self.tests, test_files, source)
 
         return
 

@@ -20,7 +20,8 @@ class Generator(Verifier):
         self.logger.info("Generating Vivado project for Neorv32 testing...")
 
         soucre = self.__script_path.joinpath('create_project.tcl')
-        self.project_path = Path(os.getcwd()).joinpath('vivado').joinpath('neorv32_verify')
+        self.project_path = Path(os.getcwd()).joinpath('vivado')
+        project_name = self.project_path.joinpath('neorv32_verify')
 
         cmd = [ 
             self.vivado_path,
@@ -28,7 +29,7 @@ class Generator(Verifier):
             '-nojournal', '-nolog',
             '-source', soucre,
             '-tclargs',
-                '--project_dir', self.project_path
+                '--project_dir', project_name
             ]
 
         self.run_command(cmd)
