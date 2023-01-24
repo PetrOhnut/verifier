@@ -1,0 +1,2 @@
+#Timestamp[ns];rstn_i;gpio_i;uart0_rxd_i One character takes aroud 530000 ns to send with boud-rate 19200, GPIO need at leaste cca 50000 ns to be ready to read and write.
+100;1;;
