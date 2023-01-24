@@ -1,6 +1,7 @@
 #!/usr/bin/env-python3
 import os 
 import time
+import platform
 
 from .verifier import Verifier
 from pathlib import Path
@@ -12,12 +13,15 @@ class Simulator(Verifier):
         self.__script_path = Path(os.path.dirname(os.path.realpath(__file__)))
         self.test_path = self.__script_path.parents[0].joinpath('testbench')
         self.tests = test_list
+        self.__os = platform.system().lower()
 
     def __run_simulation(self, test, test_files, source):
+        self.logger.debug("#### RUNNING __run_simulation FUNCTION ####")
         self.logger.debug("Test: " + str(test))
         self.logger.debug("Test files: " + str(test_files))
         self.logger.debug("Source: " + str(source))
         self.logger.debug("Project path: " + str(self.project_path))
+        self.logger.debug("OS: " + str(self.__os))
         cmd = [ 
             Path(self.vivado_path),
             '-mode', 'batch',
@@ -25,9 +29,9 @@ class Simulator(Verifier):
             '-source', source,
             '-tclargs',
                 '--project_dir', Path(self.project_path).joinpath("neorv32_verify.xpr"),
-                '--input_file', Path(test).joinpath(str(test_files[0])),
-                '--output_file', Path(test).joinpath(str(test_files[1])),
-                '--software_file', Path(test).joinpath(str(test_files[2]))
+                '--input_file', str(Path(test).joinpath(str(test_files[0]))).replace("\\", "/"),
+                '--output_file', str(Path(test).joinpath(str(test_files[1]))).replace("\\", "/"),
+                '--software_file', str(Path(test).joinpath(str(test_files[2])))
             ]
 
         if len(test_files) == 4:

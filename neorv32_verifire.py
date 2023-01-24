@@ -24,7 +24,7 @@ def target_path(path):
         logging.warning("Target folder for project generation does not exest! Creating...")
 
 def get_test_list():
-    test_path = Path(os.path.dirname(os.path.realpath(__file__))).joinpath('testbench').joinpath('test_files')
+    test_path = Path(os.path.dirname(os.path.realpath(__file__))).joinpath('testbench').joinpath('test_scenarios')
     test_list = list()
     for root, dirs, files in os.walk(test_path, topdown=False):
         for name in dirs:
@@ -86,7 +86,7 @@ def main():
 
     if (args.simulate):
         #sim = Simulator(args.vivado_path, args.simulate)
-        sim.tests = args.simulate
+        sim.tests = str(Path(os.path.dirname(os.path.realpath(__file__))).joinpath(args.simulate))
         sim.simulate()
     elif (args.simulate_all):
         #Get test files
