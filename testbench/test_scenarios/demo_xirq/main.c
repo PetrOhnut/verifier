@@ -79,10 +79,6 @@ int main() {
     return 1;
   }
 
-
-  // intro
-  neorv32_uart0_printf("External interrupt controller (XIRQ) demo program\n\n");
-
   int err_cnt = 0;
 
 
@@ -178,7 +174,7 @@ int main() {
  **************************************************************************/
 void xirq_handler_ch0(void) {
 
-  neorv32_uart0_printf("XIRQ interrupt from channel %i\n", 0);
+  neorv32_uart0_printf("0");
 }
 
 /**********************************************************************//**
@@ -188,7 +184,7 @@ void xirq_handler_ch0(void) {
  **************************************************************************/
 void xirq_handler_ch1(void) {
 
-  neorv32_uart0_printf("XIRQ interrupt from channel %i\n", 1);
+  neorv32_uart0_printf("1");
 }
 
 /**********************************************************************//**
@@ -198,7 +194,7 @@ void xirq_handler_ch1(void) {
  **************************************************************************/
 void xirq_handler_ch2(void) {
 
-  neorv32_uart0_printf("XIRQ interrupt from channel %i\n", 2);
+  neorv32_uart0_printf("2");
 }
 
 /**********************************************************************//**
@@ -208,5 +204,5 @@ void xirq_handler_ch2(void) {
  **************************************************************************/
 void xirq_handler_ch3(void) {
 
-  neorv32_uart0_printf("XIRQ interrupt from channel %i\n", 3);
+  neorv32_uart0_printf("3");
 }

@@ -74,6 +74,7 @@ module neorv32_tb;
     logic uart0_rxd_i = 1;   
     logic [7:0] gpio_o;
     logic [0:0] pwm_o;
+    logic [3:0] xirq_i = '0;
     logic uart0_txd_o; 
     logic [31:0] curr_pc_top_o;
                
@@ -148,7 +149,7 @@ module neorv32_tb;
         .SLINK_RX_FIFO  (1),
         
         // External Interrupts Controller (XIRQ)
-        .XIRQ_NUM_CH            (32),                
+        .XIRQ_NUM_CH            (4),                
         .XIRQ_TRIGGER_TYPE      (~0),
         .XIRQ_TRIGGER_POLARITY  (~0),                
 
@@ -183,6 +184,7 @@ module neorv32_tb;
         .uart0_rxd_i(uart0_rxd_i),
         .gpio_o(gpio_o),
         .pwm_o(pwm_o),
+        .xirq_i(xirq_i),
         .uart0_txd_o(uart0_txd_o)        
    );  
  
@@ -387,6 +389,10 @@ module neorv32_tb;
         end
     end
 
+    always #50000 begin : XIRQ_testing
+        //$display(       "Triggering xirq");  
+        xirq_i[0] = !xirq_i[0];
+    end
 
 // -- MONITOR -------------------------------------------------------------
 

@@ -54,6 +54,7 @@ if { $i < 2} {
 
 set script_path [ file dirname [ file normalize [ info script ] ] ]
 
+puts $project_dir
 open_project $project_dir
 
 if {$software_file != ""} {

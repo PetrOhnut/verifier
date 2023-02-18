@@ -1,8 +1,0 @@
-#Timestamp[ns];rstn_i;gpio_i;uart0_rxd_i #Procesor is reade to read at cca 80000 ns, one character takes aroud 530000 ns to send with boud-rate 19200, GPIO need at leaste cca 50000 ns to be ready to read and write. 
-100;1;0;
-80000;;1000000;T
-610000;;10000000;e
-1140000;;11000000;s
-1670000;;11111111;t
-2200000;;0;
-2730000;0;;

@@ -77,11 +77,6 @@ int main() {
     return 1;
   }
 
-  // Intro
-  neorv32_uart0_print("RISC-V Machine System Timer (MTIME) demo Program.\n"
-                      "Toggles GPIO.output(0) at 1Hz using the RISC-V 'MTI' interrupt.\n\n");
-
-
   // clear GPIO output port
   neorv32_gpio_port_set(0);
 
@@ -91,7 +86,7 @@ int main() {
 
   // configure MTIME timer's first interrupt to appear after SYSTEM_CLOCK / 2 cycles (toggle at 2Hz)
   // starting from _now_
-  neorv32_mtime_set_timecmp(neorv32_mtime_get_time() + (NEORV32_SYSINFO.CLK / 2));
+  neorv32_mtime_set_timecmp(neorv32_mtime_get_time() + (NEORV32_SYSINFO.CLK / 100));
 
   // enable interrupt
   neorv32_cpu_irq_enable(CSR_MIE_MTIE); // enable MTIME interrupt
@@ -116,7 +111,7 @@ void mtime_irq_handler(void) {
 
   // update MTIMECMP value for next IRQ (in SYSTEM_CLOCK / 2 cycles)
   // this will also ack/clear the current MTIME interrupt request
-  neorv32_mtime_set_timecmp(neorv32_mtime_get_timecmp() + (NEORV32_SYSINFO.CLK / 2));
+  neorv32_mtime_set_timecmp(neorv32_mtime_get_timecmp() + (NEORV32_SYSINFO.CLK / 100));
 
 
   neorv32_uart0_putc('.'); // send tick symbol via UART
